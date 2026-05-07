@@ -27,6 +27,11 @@ window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[autoload]
+
+GameSettings="*res://scripts/core/GameSettings.gd"
+SaveData="*res://scripts/game/SaveData.gd"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
