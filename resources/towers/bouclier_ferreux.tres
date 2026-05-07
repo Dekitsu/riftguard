@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="TowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/TowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"bouclier_ferreux"
+display_name = "Bouclier Ferreux"
+description = "Haute cadence, cible les ennemis blindés en priorité (PV max)."
+faction = 2
+target_mode = 3
+special = 0
+damage = 20
+range = 160.0
+fire_rate = 2.0
+cost = 55
+damage_per_level = 0.35
+range_per_level = 0.08
+fire_rate_per_level = 0.2
+upgrade_cost_base = 45
+upgrade_cost_per_level = 0.5
+max_level = 5

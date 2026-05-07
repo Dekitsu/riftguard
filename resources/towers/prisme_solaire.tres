@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="TowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/TowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"prisme_solaire"
+display_name = "Prisme Solaire"
+description = "Dégâts en chaîne sur 2 ennemis supplémentaires. Cible l'ennemi le plus rapide."
+faction = 0
+target_mode = 4
+special = 2
+damage = 8
+range = 180.0
+fire_rate = 0.8
+cost = 65
+damage_per_level = 0.25
+range_per_level = 0.08
+fire_rate_per_level = 0.12
+upgrade_cost_base = 50
+upgrade_cost_per_level = 0.5
+max_level = 5
+chain_count = 2

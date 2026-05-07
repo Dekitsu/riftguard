@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="TowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/TowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"tourelle_frimas"
+display_name = "Tourelle Frimas"
+description = "Ralentit les ennemis à 50% de leur vitesse. Cible l'ennemi le plus avancé."
+faction = 1
+target_mode = 0
+special = 1
+damage = 7
+range = 200.0
+fire_rate = 1.5
+cost = 55
+damage_per_level = 0.2
+range_per_level = 0.1
+fire_rate_per_level = 0.15
+upgrade_cost_base = 45
+upgrade_cost_per_level = 0.5
+max_level = 5
+slow_factor = 0.5
+slow_duration = 2.0

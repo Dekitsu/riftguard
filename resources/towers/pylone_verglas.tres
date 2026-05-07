@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="TowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/TowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"pylone_verglas"
+display_name = "Pylône Verglas"
+description = "Dégâts sur la durée (DoT) sur 3 ticks. Cible les ennemis les plus faibles en PV."
+faction = 1
+target_mode = 2
+special = 5
+damage = 15
+range = 220.0
+fire_rate = 0.5
+cost = 70
+damage_per_level = 0.3
+range_per_level = 0.1
+fire_rate_per_level = 0.1
+upgrade_cost_base = 55
+upgrade_cost_per_level = 0.5
+max_level = 5
+dot_duration = 3.0
+dot_ticks = 3

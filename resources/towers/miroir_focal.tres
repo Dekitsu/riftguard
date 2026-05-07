@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="TowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/TowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"miroir_focal"
+display_name = "Miroir Focal"
+description = "AOE autour de la tour. Cible les ennemis les plus proches."
+faction = 0
+target_mode = 5
+special = 3
+damage = 6
+range = 150.0
+fire_rate = 0.6
+cost = 90
+damage_per_level = 0.2
+range_per_level = 0.12
+fire_rate_per_level = 0.1
+upgrade_cost_base = 70
+upgrade_cost_per_level = 0.5
+max_level = 5
+aoe_radius = 150.0

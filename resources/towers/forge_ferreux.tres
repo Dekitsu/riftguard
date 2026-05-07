@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="TowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/TowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"forge_ferreux"
+display_name = "Forge Ferreux"
+description = "AOE lente mais puissante. Cible les ennemis avec le plus de PV."
+faction = 2
+target_mode = 3
+special = 3
+damage = 25
+range = 140.0
+fire_rate = 0.4
+cost = 90
+damage_per_level = 0.4
+range_per_level = 0.1
+fire_rate_per_level = 0.1
+upgrade_cost_base = 75
+upgrade_cost_per_level = 0.6
+max_level = 5
+aoe_radius = 140.0
