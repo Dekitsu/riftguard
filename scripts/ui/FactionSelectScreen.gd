@@ -54,9 +54,15 @@ func _make_card(f: TowerData.Faction) -> PanelContainer:
 		_selected = f
 		_show_detail(f)
 		faction_selected.emit(f)
+		_launch(f)
 	)
 	vbox.add_child(btn)
 	return panel
+
+func _launch(f: TowerData.Faction) -> void:
+	# Store chosen faction so GameScene can read it
+	ProjectSettings.set_setting("riftguard/selected_faction", int(f))
+	get_tree().change_scene_to_file("res://scenes/game/GameScene.tscn")
 
 func _show_detail(f: TowerData.Faction) -> void:
 	_detail_name.text = TowerData.Faction.keys()[f]

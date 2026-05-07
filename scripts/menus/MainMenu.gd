@@ -13,7 +13,7 @@ func _ready() -> void:
 	GameSettings.orientation_changed.connect(func(_o): _refresh_orientation_label())
 
 func _on_play() -> void:
-	get_tree().change_scene_to_file("res://scenes/game/GameScene.tscn")
+	get_tree().change_scene_to_file("res://scenes/menus/FactionSelect.tscn")
 
 func _on_toggle_orientation() -> void:
 	var next := GameSettings.Orientation.PORTRAIT \

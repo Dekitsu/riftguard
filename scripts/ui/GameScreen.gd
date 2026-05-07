@@ -16,9 +16,14 @@ var _draft_choices: Array[TowerData] = []
 var _current_slot: TowerSlot = null
 
 func _ready() -> void:
+	# Read faction chosen on the selection screen (fallback to export var)
+	var stored := ProjectSettings.get_setting("riftguard/selected_faction", int(faction))
+	faction = stored as TowerData.Faction
+	var faction_level := SaveData.get_faction_level(faction) if Engine.has_singleton("SaveData") else 1
+
 	var ws := wave_set_resource if wave_set_resource != null else _build_default_wave_set()
 
-	_manager.start_run(faction, ws, _map.waypoints)
+	_manager.start_run(faction, faction_level, ws, _map.waypoints)
 	_hud.bind(_manager.run, _manager)
 
 	_manager.run.run_won.connect(_on_run_won)

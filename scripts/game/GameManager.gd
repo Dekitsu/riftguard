@@ -18,9 +18,9 @@ var draft: DraftManager
 var _phase: Phase = Phase.PREP
 var _gate_hits: int = 0
 
-func start_run(faction: TowerData.Faction, wave_set: WaveSet, waypoints: Array[Vector2]) -> void:
+func start_run(faction: TowerData.Faction, faction_level: int = 1, wave_set: WaveSet = null, waypoints: Array[Vector2] = []) -> void:
 	run = RunState.new()
-	run.setup(faction)
+	run.setup(faction, faction_level)
 	run.run_won.connect(_on_run_won)
 	run.run_lost.connect(_on_run_lost)
 
