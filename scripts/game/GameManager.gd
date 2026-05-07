@@ -58,9 +58,41 @@ func _on_enemy_reached_gate() -> void:
 	_gate_hits += 1
 	run.lose_life()
 
+func place_tower(slot: TowerSlot, tower_data: TowerData) -> void:
+	if slot.is_occupied():
+		return
+	var t: Tower = tower_scene.instantiate()
+	t.setup(tower_data)
+	var area: Area2D = t.get_node_or_null("RangeArea")
+	if area != null:
+		area.body_entered.connect(t._on_enemy_entered)
+		area.body_exited.connect(t._on_enemy_exited)
+	if not run.place_tower(t, tower_data.cost):
+		t.queue_free()
+		return
+	slot.place(t)
+
+func upgrade_tower(slot: TowerSlot) -> void:
+	if not slot.is_occupied():
+		return
+	run.upgrade_tower(slot.tower)
+	# Refresh range shape after upgrade
+	var area: Area2D = slot.tower.get_node_or_null("RangeArea")
+	if area != null:
+		var shape: CollisionShape2D = area.get_node_or_null("RangeShape")
+		if shape != null and shape.shape is CircleShape2D:
+			shape.shape.radius = slot.tower.data.stats_at_level(slot.tower.level).range
+
+func sell_tower(slot: TowerSlot) -> void:
+	if not slot.is_occupied():
+		return
+	run.sell_tower(slot.tower)
+	slot.clear()
+
 func _on_slot_tapped(slot: TowerSlot) -> void:
-	# UI handles showing place/upgrade/sell panel — GameManager just routes state
-	pass
+	slot_tapped.emit(slot)
+
+signal slot_tapped(slot: TowerSlot)
 
 func _on_run_won() -> void:
 	_set_phase(Phase.RESULT)

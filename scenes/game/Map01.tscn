@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=3 uid="uid://map01"]
+
+[ext_resource type="Script" path="res://scripts/game/MapScene.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/game/TowerSlot.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/game/WaveSpawner.gd" id="3"]
+
+[node name="Map01" type="Node2D"]
+script = ExtResource("1")
+waypoint_path = NodePath("Waypoints")
+slot_container_path = NodePath("TowerSlots")
+
+[node name="Waypoints" type="Node2D" parent="."]
+
+[node name="WP0" type="Node2D" parent="Waypoints"]
+position = Vector2(50, 540)
+
+[node name="WP1" type="Node2D" parent="Waypoints"]
+position = Vector2(400, 540)
+
+[node name="WP2" type="Node2D" parent="Waypoints"]
+position = Vector2(400, 270)
+
+[node name="WP3" type="Node2D" parent="Waypoints"]
+position = Vector2(800, 270)
+
+[node name="WP4" type="Node2D" parent="Waypoints"]
+position = Vector2(800, 700)
+
+[node name="WP5" type="Node2D" parent="Waypoints"]
+position = Vector2(1400, 700)
+
+[node name="WP6" type="Node2D" parent="Waypoints"]
+position = Vector2(1400, 400)
+
+[node name="WP7" type="Node2D" parent="Waypoints"]
+position = Vector2(1870, 400)
+
+[node name="TowerSlots" type="Node2D" parent="."]
+
+[node name="Slot0" type="Node2D" parent="TowerSlots"]
+script = ExtResource("2")
+position = Vector2(550, 540)
+
+[node name="Slot1" type="Node2D" parent="TowerSlots"]
+script = ExtResource("2")
+position = Vector2(700, 540)
+
+[node name="Slot2" type="Node2D" parent="TowerSlots"]
+script = ExtResource("2")
+position = Vector2(550, 380)
+
+[node name="Slot3" type="Node2D" parent="TowerSlots"]
+script = ExtResource("2")
+position = Vector2(250, 350)
+
+[node name="Slot4" type="Node2D" parent="TowerSlots"]
+script = ExtResource("2")
+position = Vector2(1000, 500)
+
+[node name="Slot5" type="Node2D" parent="TowerSlots"]
+script = ExtResource("2")
+position = Vector2(1200, 580)
+
+[node name="Slot6" type="Node2D" parent="TowerSlots"]
+script = ExtResource("2")
+position = Vector2(1600, 550)
+
+[node name="WaveSpawner" type="Node" parent="."]
+script = ExtResource("3")
+
+[node name="Enemies" type="Node2D" parent="."]
