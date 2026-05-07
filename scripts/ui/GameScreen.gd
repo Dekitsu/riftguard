@@ -53,8 +53,8 @@ func _on_draft_choice(index: int) -> void:
 func _on_slot_tapped(slot: TowerSlot) -> void:
 	_current_slot = slot
 	if slot.is_occupied():
-		var entry := _manager.run._find_entry(slot.tower)
-		var invested := entry.invested if entry != null else 0
+		var entry: Dictionary = _manager.run._find_entry(slot.tower)
+		var invested: int = entry.get("invested", 0)
 		_tower_panel.show_tower(slot, _manager.run, invested)
 	else:
 		_tower_panel.show_empty(slot, _draft_choices, _manager.run)

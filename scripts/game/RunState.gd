@@ -30,7 +30,7 @@ static func max_lives() -> int:
 	return 20
 
 func earn_gold(amount: int) -> void:
-	var effective := int(amount * passives.gold_mult) if passives != null else amount
+	var effective: int = int(amount * passives.gold_mult) if passives != null else amount
 	gold += effective
 	gold_changed.emit(gold)
 
@@ -55,32 +55,32 @@ func place_tower(tower: Tower, cost: int) -> bool:
 	return true
 
 func upgrade_tower(tower: Tower) -> bool:
-	var entry := _find_entry(tower)
-	if entry == null:
+	var entry: Dictionary = _find_entry(tower)
+	if entry.is_empty():
 		return false
-	var cost := tower.upgrade_cost()
+	var cost: int = tower.upgrade_cost()
 	if not spend_gold(cost):
 		return false
-	entry.invested += cost
+	entry["invested"] = entry.get("invested", 0) + cost
 	return tower.upgrade()
 
 func sell_tower(tower: Tower) -> void:
-	var entry := _find_entry(tower)
-	if entry == null:
+	var entry: Dictionary = _find_entry(tower)
+	if entry.is_empty():
 		return
-	var refund := tower.sell_value(entry.invested)
+	var refund: int = tower.sell_value(entry.get("invested", 0))
 	towers_placed.erase(entry)
 	earn_gold(refund)
 	tower.queue_free()
 	_refresh_synergy_positions()
 
 func on_enemy_killed_by_tower(tower: Tower, enemy: Enemy) -> void:
-	var all_pos := _all_tower_positions()
+	var all_pos: Array[Vector2] = _all_tower_positions()
 	synergy.on_enemy_killed(tower.global_position, all_pos)
 
 ## Returns passives-adjusted damage for a given tower shot.
 func modify_damage(base: int, target: Enemy, shooter: Tower) -> int:
-	var with_passives := int(base * passives.damage_mult)
+	var with_passives: int = int(base * passives.damage_mult)
 	return synergy.modify_damage(with_passives, target, shooter.global_position, _all_tower_positions())
 
 func _refresh_synergy_positions() -> void:
@@ -93,10 +93,11 @@ func _all_tower_positions() -> Array[Vector2]:
 			result.append(e.tower.global_position)
 	return result
 
-func _find_entry(tower: Tower):
+func _find_entry(tower: Tower) -> Dictionary:
 	for e in towers_placed:
 		if e.tower == tower:
 			return e
+	return {}
 	return null
 
 ## XP earned at run end based on waves cleared.
