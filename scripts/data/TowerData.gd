@@ -55,7 +55,7 @@ enum TowerSpecial {
 @export var dot_ticks: int = 3
 
 func stats_at_level(level: int) -> Dictionary:
-	var l := clamp(level, 1, max_level) - 1
+	var l: int = clamp(level, 1, max_level) - 1
 	return {
 		"damage":    int(damage * (1.0 + damage_per_level * l)),
 		"range":     range * (1.0 + range_per_level * l),

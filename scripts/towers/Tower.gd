@@ -25,29 +25,54 @@ func _process(delta: float) -> void:
 			_shoot(target, stats)
 
 func _pick_target() -> Enemy:
-	_enemies_in_range = _enemies_in_range.filter(func(e): return is_instance_valid(e))
+	# Purge invalid refs
+	var valid: Array[Enemy] = []
+	for e in _enemies_in_range:
+		if is_instance_valid(e):
+			valid.append(e)
+	_enemies_in_range = valid
 	if _enemies_in_range.is_empty():
 		return null
+
+	var best: Enemy = _enemies_in_range[0]
 	match data.target_mode:
 		TowerData.TargetMode.FIRST:
-			return _enemies_in_range.reduce(func(a, b): return a if a.path_progress() > b.path_progress() else b)
+			for e in _enemies_in_range:
+				if e.path_progress() > best.path_progress():
+					best = e
 		TowerData.TargetMode.LAST:
-			return _enemies_in_range.reduce(func(a, b): return a if a.path_progress() < b.path_progress() else b)
+			for e in _enemies_in_range:
+				if e.path_progress() < best.path_progress():
+					best = e
 		TowerData.TargetMode.LOWEST_HP:
-			return _enemies_in_range.reduce(func(a, b): return a if a.current_hp < b.current_hp else b)
+			for e in _enemies_in_range:
+				if e.current_hp < best.current_hp:
+					best = e
 		TowerData.TargetMode.HIGHEST_HP:
-			return _enemies_in_range.reduce(func(a, b): return a if a.current_hp > b.current_hp else b)
+			for e in _enemies_in_range:
+				if e.current_hp > best.current_hp:
+					best = e
 		TowerData.TargetMode.FASTEST:
-			return _enemies_in_range.reduce(func(a, b): return a if a.current_speed > b.current_speed else b)
+			for e in _enemies_in_range:
+				if e.current_speed > best.current_speed:
+					best = e
 		TowerData.TargetMode.CLOSEST:
-			return _enemies_in_range.reduce(func(a, b): return a if global_position.distance_to(a.global_position) < global_position.distance_to(b.global_position) else b)
+			for e in _enemies_in_range:
+				if global_position.distance_to(e.global_position) < global_position.distance_to(best.global_position):
+					best = e
 		TowerData.TargetMode.FLYING_FIRST:
-			var flying := _enemies_in_range.filter(func(e): return e.data.is_flying)
-			return flying[0] if not flying.is_empty() else _enemies_in_range[0]
+			var flying: Array[Enemy] = []
+			for e in _enemies_in_range:
+				if e.data.is_flying:
+					flying.append(e)
+			best = flying[0] if not flying.is_empty() else _enemies_in_range[0]
 		TowerData.TargetMode.GROUND_FIRST:
-			var ground := _enemies_in_range.filter(func(e): return not e.data.is_flying)
-			return ground[0] if not ground.is_empty() else _enemies_in_range[0]
-	return _enemies_in_range[0]
+			var ground: Array[Enemy] = []
+			for e in _enemies_in_range:
+				if not e.data.is_flying:
+					ground.append(e)
+			best = ground[0] if not ground.is_empty() else _enemies_in_range[0]
+	return best
 
 func _effective_damage(base: int, target: Enemy) -> int:
 	if run_state != null:

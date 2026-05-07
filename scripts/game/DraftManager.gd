@@ -13,7 +13,10 @@ var _current_choices: Array[TowerData] = []
 
 func setup(faction: TowerData.Faction, all_towers: Array[TowerData]) -> void:
 	_faction = faction
-	_all_towers = all_towers.filter(func(t): return t.faction == faction)
+	_all_towers.clear()
+	for t in all_towers:
+		if t.faction == faction:
+			_all_towers.append(t)
 
 func generate_draft() -> void:
 	var pool := _all_towers.duplicate()
