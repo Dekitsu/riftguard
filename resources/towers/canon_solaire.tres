@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="TowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/TowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"canon_solaire"
+display_name = "Canon Solaire"
+description = "Tire un rayon concentré. Cible l'ennemi le plus avancé."
+faction = 0
+target_mode = 0
+special = 0
+damage = 12
+range = 220.0
+fire_rate = 1.2
+cost = 50
+damage_per_level = 0.3
+range_per_level = 0.1
+fire_rate_per_level = 0.1
+upgrade_cost_base = 40
+upgrade_cost_per_level = 0.5
+max_level = 5
