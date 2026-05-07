@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="TowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/TowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"golem_ferreux"
+display_name = "Golem Ferreux"
+description = "Tire sur les ennemis avec le plus de PV. Lent mais dévastateur."
+faction = 2
+target_mode = 3
+special = 0
+damage = 40
+range = 180.0
+fire_rate = 0.3
+cost = 90
+damage_per_level = 0.45
+range_per_level = 0.08
+fire_rate_per_level = 0.08
+upgrade_cost_base = 75
+upgrade_cost_per_level = 0.6
+max_level = 5

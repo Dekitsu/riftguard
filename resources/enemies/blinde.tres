@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/EnemyData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"blinde"
+display_name = "Blindé"
+type = 2
+max_hp = 200
+speed = 60.0
+armor = 0.0
+physical_resist = 0.5
+gold_reward = 12
+is_flying = false
+resistance_types = []
+swarm_count = 0

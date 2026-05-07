@@ -64,16 +64,14 @@ func _on_sell_requested(slot: TowerSlot) -> void:
 	_manager.sell_tower(slot)
 
 func _on_run_won() -> void:
-	_result.show_victory(
-		_manager._spawner._current_wave,
-		_manager.run.gold
-	)
+	var waves := _manager._spawner._current_wave
+	RunEndManager.on_run_finished(_manager.run, waves, true)
+	_result.show_victory(waves, _manager.run.gold)
 
 func _on_run_lost() -> void:
-	_result.show_defeat(
-		_manager._spawner._current_wave,
-		RunState.MAX_LIVES - _manager.run.lives
-	)
+	var waves := _manager._spawner._current_wave
+	RunEndManager.on_run_finished(_manager.run, waves, false)
+	_result.show_defeat(waves, RunState.max_lives() - _manager.run.lives)
 
 func _reload_scene() -> void:
 	get_tree().reload_current_scene()

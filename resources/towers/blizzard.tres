@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="TowerData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/TowerData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"blizzard"
+display_name = "Blizzard"
+description = "AOE glaciale qui ralentit tous les ennemis touchés. Cible les plus proches."
+faction = 1
+target_mode = 5
+special = 3
+damage = 5
+range = 180.0
+fire_rate = 0.4
+cost = 90
+damage_per_level = 0.15
+range_per_level = 0.12
+fire_rate_per_level = 0.08
+upgrade_cost_base = 70
+upgrade_cost_per_level = 0.6
+max_level = 5
+aoe_radius = 180.0
+slow_factor = 0.4
+slow_duration = 2.5

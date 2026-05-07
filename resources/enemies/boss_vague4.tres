@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/EnemyData.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"boss_vague4"
+display_name = "Colosse Blindé"
+type = 5
+max_hp = 1000
+speed = 50.0
+armor = 3.0
+physical_resist = 0.3
+gold_reward = 50
+is_flying = false
+resistance_types = ["slow"]
+swarm_count = 0

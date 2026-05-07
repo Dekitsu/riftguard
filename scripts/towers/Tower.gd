@@ -1,13 +1,17 @@
 class_name Tower
 extends Node2D
 
+signal enemy_killed(tower: Tower, enemy: Enemy)
+
 var data: TowerData
 var level: int = 1
+var run_state: RunState = null   # injected after placement
 var _enemies_in_range: Array[Enemy] = []
 var _fire_timer: float = 0.0
 
-func setup(tower_data: TowerData) -> void:
+func setup(tower_data: TowerData, rs: RunState = null) -> void:
 	data = tower_data
+	run_state = rs
 	level = 1
 	_update_range_shape()
 
@@ -45,12 +49,17 @@ func _pick_target() -> Enemy:
 			return ground[0] if not ground.is_empty() else _enemies_in_range[0]
 	return _enemies_in_range[0]
 
+func _effective_damage(base: int, target: Enemy) -> int:
+	if run_state != null:
+		return run_state.modify_damage(base, target, self)
+	return base
+
 func _shoot(target: Enemy, stats: Dictionary) -> void:
 	match data.special:
 		TowerData.TowerSpecial.NONE:
-			target.take_damage(stats.damage)
+			_deal(target, _effective_damage(stats.damage, target))
 		TowerData.TowerSpecial.SLOW:
-			target.take_damage(stats.damage)
+			_deal(target, _effective_damage(stats.damage, target))
 			target.apply_slow(data.slow_factor, data.slow_duration)
 		TowerData.TowerSpecial.AOE:
 			_shoot_aoe(stats.damage)
@@ -60,7 +69,14 @@ func _shoot(target: Enemy, stats: Dictionary) -> void:
 			var tick_dmg := stats.damage / data.dot_ticks
 			target.apply_dot(tick_dmg, data.dot_duration, data.dot_duration / float(data.dot_ticks))
 		TowerData.TowerSpecial.BUFF:
-			pass  # handled by BuffTower subclass
+			pass
+
+func _deal(target: Enemy, amount: int) -> void:
+	if not is_instance_valid(target):
+		return
+	target.take_damage(amount)
+	if not is_instance_valid(target):
+		enemy_killed.emit(self, target)
 
 func _shoot_aoe(damage: int) -> void:
 	var stats := data.stats_at_level(level)
