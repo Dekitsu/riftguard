@@ -12,7 +12,7 @@ class Resolved extends RefCounted:
 
 static func resolve(faction: TowerData.Faction, faction_level: int) -> Resolved:
 	var r := Resolved.new()
-	var passives := FactionPassive.all_for_faction(faction)
+	var passives: Array[FactionPassive] = FactionPassive.all_for_faction(faction)
 	for p in passives:
 		if faction_level < p.unlock_level:
 			continue

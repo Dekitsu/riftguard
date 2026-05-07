@@ -99,7 +99,7 @@ func _make_card(f: TowerData.Faction) -> PanelContainer:
 	var btn := Button.new()
 	btn.text = "Jouer"
 	btn.size_flags_vertical = Control.SIZE_SHRINK_END
-	var captured_f := f
+	var captured_f: TowerData.Faction = f
 	btn.pressed.connect(func(): _on_faction_chosen(captured_f))
 	vbox.add_child(btn)
 
@@ -122,7 +122,7 @@ func _show_detail(f: TowerData.Faction) -> void:
 
 	for p in FactionPassive.all_for_faction(f):
 		var row := Label.new()
-		var unlocked := level >= p.unlock_level
+		var unlocked: bool = level >= p.unlock_level
 		row.text = "%s Nv.%d — %s" % ["✓" if unlocked else "✗", p.unlock_level, p.description]
 		row.modulate.a = 1.0 if unlocked else 0.4
 		_detail_passives.add_child(row)

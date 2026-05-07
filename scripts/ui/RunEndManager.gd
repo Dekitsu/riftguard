@@ -4,7 +4,7 @@ extends RefCounted
 
 static func on_run_finished(run: RunState, waves_cleared: int, won: bool) -> void:
 	run.highest_wave = waves_cleared
-	var xp := run.xp_earned()
+	var xp: int = run.xp_earned()
 	SaveData.increment_runs()
 	SaveData.update_best_wave(run.faction, waves_cleared)
 

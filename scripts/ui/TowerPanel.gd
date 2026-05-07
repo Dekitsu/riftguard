@@ -43,13 +43,13 @@ func show_empty(slot: TowerSlot, choices: Array[TowerData], run: RunState) -> vo
 func show_tower(slot: TowerSlot, run: RunState, invested: int) -> void:
 	_slot = slot
 	_run = run
-	var t := slot.tower
+	var t: Tower = slot.tower
 	_title.text = "%s  Nv.%d" % [t.data.display_name, t.level]
 	_place_btn.hide()
 	_upgrade_btn.show()
 	_sell_btn.show()
-	var upgrade_cost := t.upgrade_cost()
-	var can_upgrade := t.level < t.data.max_level and run.gold >= upgrade_cost
+	var upgrade_cost: int = t.upgrade_cost()
+	var can_upgrade: bool = t.level < t.data.max_level and run.gold >= upgrade_cost
 	_upgrade_btn.text = "Améliorer — %d ⚙" % upgrade_cost if t.level < t.data.max_level else "Niveau max"
 	_upgrade_btn.disabled = not can_upgrade
 	_sell_btn.text = "Vendre — %d ⚙" % t.sell_value(invested)
@@ -57,7 +57,7 @@ func show_tower(slot: TowerSlot, run: RunState, invested: int) -> void:
 	show()
 
 func _format_stats(td: TowerData, level: int) -> String:
-	var s := td.stats_at_level(level)
+	var s: Dictionary = td.stats_at_level(level)
 	return "Dégâts: %d  |  Portée: %.0f  |  Cadence: %.1f/s" % [s.damage, s.range, s.fire_rate]
 
 func _on_place() -> void:

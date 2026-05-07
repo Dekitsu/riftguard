@@ -57,7 +57,7 @@ func save() -> void:
 	var cfg := ConfigFile.new()
 	cfg.set_value("stats", "total_runs", total_runs)
 	for f in TowerData.Faction.values():
-		var key := str(int(f))
+		var key: String = str(int(f))
 		cfg.set_value("faction_levels", key, _faction_levels.get(f, 1))
 		cfg.set_value("faction_xp", key, _faction_xp.get(f, 0))
 		cfg.set_value("best_waves", key, _best_waves.get(f, 0))
@@ -69,7 +69,7 @@ func load_data() -> void:
 		return
 	total_runs = cfg.get_value("stats", "total_runs", 0)
 	for f in TowerData.Faction.values():
-		var key := str(int(f))
+		var key: String = str(int(f))
 		_faction_levels[f] = cfg.get_value("faction_levels", key, 1)
 		_faction_xp[f] = cfg.get_value("faction_xp", key, 0)
 		_best_waves[f] = cfg.get_value("best_waves", key, 0)

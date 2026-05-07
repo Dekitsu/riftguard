@@ -35,7 +35,7 @@ func _spawn_wave(wave_data: WaveData) -> void:
 	_spawn_groups(wave_data.groups, wave_data.wave_index)
 
 func _spawn_groups(groups: Array, wave_index: int) -> void:
-	var delay := 0.0
+	var delay: float = 0.0
 	for group in groups:
 		delay += group.delay_before
 		for i in group.count:
@@ -44,8 +44,8 @@ func _spawn_groups(groups: Array, wave_index: int) -> void:
 			t.one_shot = true
 			add_child(t)
 			t.start()
-			var d := group  # capture
-			var wi := wave_index
+			var d: WaveData.SpawnGroup = group
+			var wi: int = wave_index
 			t.timeout.connect(func(): _spawn_enemy(d.enemy, wi); t.queue_free())
 		delay += group.count * group.interval
 
@@ -70,7 +70,7 @@ func _check_wave_clear() -> void:
 		return
 	_wave_active = false
 	var wave_data: WaveData = _wave_set.waves[_current_wave]
-	var gold := EconomyData.gold_for_wave(wave_data.wave_index) + wave_data.gold_bonus
+	var gold: int = EconomyData.gold_for_wave(wave_data.wave_index) + wave_data.gold_bonus
 	if wave_data.is_boss_wave:
 		gold += EconomyData.BOSS_WAVE_GOLD_BONUS
 	_current_wave += 1

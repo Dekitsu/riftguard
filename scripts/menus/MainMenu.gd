@@ -23,7 +23,7 @@ func _ready() -> void:
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	center.add_child(title)
 
-	var play_btn := _make_btn("Jouer", 400, 60, 24)
+	var play_btn: Button = _make_btn("Jouer", 400, 60, 24)
 	play_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/menus/FactionSelect.tscn"))
 	center.add_child(play_btn)
 
@@ -33,7 +33,7 @@ func _ready() -> void:
 	_refresh_orientation_label()
 	GameSettings.orientation_changed.connect(func(_o): _refresh_orientation_label())
 
-	var quit_btn := _make_btn("Quitter", 400, 60, 20)
+	var quit_btn: Button = _make_btn("Quitter", 400, 60, 20)
 	quit_btn.pressed.connect(get_tree().quit)
 	center.add_child(quit_btn)
 
@@ -45,9 +45,9 @@ func _make_btn(label: String, w: float, h: float, font_size: int) -> Button:
 	return btn
 
 func _on_toggle_orientation() -> void:
-	var next := 1 if GameSettings.orientation == 0 else 0
+	var next: int = 1 if GameSettings.orientation == 0 else 0
 	GameSettings.set_orientation(next)
 
 func _refresh_orientation_label() -> void:
-	var label := "Portrait" if GameSettings.orientation == 1 else "Paysage"
+	var label: String = "Portrait" if GameSettings.orientation == 1 else "Paysage"
 	_orientation_btn.text = "Orientation : %s" % label

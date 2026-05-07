@@ -19,16 +19,19 @@ func setup(faction: TowerData.Faction, all_towers: Array[TowerData]) -> void:
 			_all_towers.append(t)
 
 func generate_draft() -> void:
-	var pool := _all_towers.duplicate()
+	var pool: Array[TowerData] = []
+	pool.assign(_all_towers)
 	pool.shuffle()
 	_current_choices.clear()
 	for i in min(CHOICES, pool.size()):
 		_current_choices.append(pool[i])
-	draft_ready.emit(_current_choices.duplicate())
+	var emit_choices: Array[TowerData] = []
+	emit_choices.assign(_current_choices)
+	draft_ready.emit(emit_choices)
 
 func pick(index: int) -> TowerData:
 	if index < 0 or index >= _current_choices.size():
 		return null
-	var chosen := _current_choices[index]
+	var chosen: TowerData = _current_choices[index]
 	draft_resolved.emit(chosen)
 	return chosen

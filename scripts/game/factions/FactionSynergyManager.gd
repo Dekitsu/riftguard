@@ -27,7 +27,7 @@ func modify_damage(base: int, target: Enemy, shooter_pos: Vector2, all_tower_pos
 		TowerData.Faction.GELIDES:
 			return GelidesStrategy.amplified_damage(target, base)
 		TowerData.Faction.SOLARIENS:
-			var aligned := SolariensStrategy.are_aligned(all_tower_positions)
+			var aligned: bool = SolariensStrategy.are_aligned(all_tower_positions)
 			return SolariensStrategy.apply_bonus(base, aligned)
 		_:
 			return base

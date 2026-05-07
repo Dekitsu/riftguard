@@ -17,11 +17,11 @@ var _current_slot: TowerSlot = null
 
 func _ready() -> void:
 	# Read faction chosen on the selection screen (fallback to export var)
-	var stored := ProjectSettings.get_setting("riftguard/selected_faction", int(faction))
+	var stored: int = ProjectSettings.get_setting("riftguard/selected_faction", int(faction))
 	faction = stored as TowerData.Faction
-	var faction_level := SaveData.get_faction_level(faction)
+	var faction_level: int = SaveData.get_faction_level(faction)
 
-	var ws := wave_set_resource if wave_set_resource != null else _build_default_wave_set()
+	var ws: WaveSet = wave_set_resource if wave_set_resource != null else _build_default_wave_set()
 
 	_manager.start_run(faction, faction_level, ws, _map.waypoints)
 	_hud.bind(_manager.run, _manager)
@@ -69,12 +69,12 @@ func _on_sell_requested(slot: TowerSlot) -> void:
 	_manager.sell_tower(slot)
 
 func _on_run_won() -> void:
-	var waves := _manager._spawner._current_wave
+	var waves: int = _manager._spawner._current_wave
 	RunEndManager.on_run_finished(_manager.run, waves, true)
 	_result.show_victory(waves, _manager.run.gold)
 
 func _on_run_lost() -> void:
-	var waves := _manager._spawner._current_wave
+	var waves: int = _manager._spawner._current_wave
 	RunEndManager.on_run_finished(_manager.run, waves, false)
 	_result.show_defeat(waves, RunState.max_lives() - _manager.run.lives)
 
@@ -89,7 +89,7 @@ func _build_default_wave_set() -> WaveSet:
 	ws.map_id = &"map01"
 	ws.total_waves = 12
 	ws.waves = []
-	var marcheur_data := EnemyData.new()
+	var marcheur_data: EnemyData = EnemyData.new()
 	marcheur_data.id = &"marcheur"
 	marcheur_data.display_name = "Marcheur"
 	marcheur_data.type = EnemyData.EnemyType.WALKER

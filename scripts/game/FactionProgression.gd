@@ -24,7 +24,7 @@ static func xp_for_level(target_level: int) -> int:
 	if target_level <= 1:
 		return 0
 	# Formula: 100 * level^1.5, cumulative
-	var total := 0
+	var total: int = 0
 	for l in range(2, target_level + 1):
 		total += int(100 * pow(l, 1.5))
 	return total

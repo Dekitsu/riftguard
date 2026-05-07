@@ -11,7 +11,7 @@ static func are_aligned(positions: Array[Vector2]) -> bool:
 		return false
 	# Check horizontal alignment (same Y ± tolerance)
 	for i in positions.size():
-		var count := 0
+		var count: int = 0
 		for j in positions.size():
 			if abs(positions[i].y - positions[j].y) <= ALIGNMENT_TOLERANCE:
 				count += 1
@@ -19,7 +19,7 @@ static func are_aligned(positions: Array[Vector2]) -> bool:
 			return true
 	# Check vertical alignment (same X ± tolerance)
 	for i in positions.size():
-		var count := 0
+		var count: int = 0
 		for j in positions.size():
 			if abs(positions[i].x - positions[j].x) <= ALIGNMENT_TOLERANCE:
 				count += 1

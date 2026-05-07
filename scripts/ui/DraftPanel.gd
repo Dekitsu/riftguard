@@ -15,7 +15,7 @@ func show_draft(choices: Array[TowerData]) -> void:
 		child.queue_free()
 	_title.text = "Choisissez une tour à ajouter"
 	for i in choices.size():
-		var btn := _make_choice_card(choices[i], i)
+		var btn: PanelContainer = _make_choice_card(choices[i], i)
 		_container.add_child(btn)
 	show()
 
@@ -35,7 +35,7 @@ func _make_choice_card(td: TowerData, index: int) -> PanelContainer:
 	desc_lbl.custom_minimum_size = Vector2(200, 0)
 	vbox.add_child(desc_lbl)
 
-	var stats := td.stats_at_level(1)
+	var stats: Dictionary = td.stats_at_level(1)
 	var stats_lbl := Label.new()
 	stats_lbl.text = "Dégâts: %d  Portée: %.0f\nCadence: %.1f/s" % [stats.damage, stats.range, stats.fire_rate]
 	vbox.add_child(stats_lbl)

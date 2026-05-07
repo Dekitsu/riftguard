@@ -106,11 +106,11 @@ func _set_phase(p: Phase) -> void:
 
 func _load_all_towers() -> Array[TowerData]:
 	var result: Array[TowerData] = []
-	var dir := DirAccess.open("res://resources/towers/")
+	var dir: DirAccess = DirAccess.open("res://resources/towers/")
 	if dir == null:
 		return result
 	dir.list_dir_begin()
-	var file := dir.get_next()
+	var file: String = dir.get_next()
 	while file != "":
 		if file.ends_with(".tres"):
 			var td: TowerData = load("res://resources/towers/" + file)

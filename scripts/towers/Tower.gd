@@ -18,9 +18,9 @@ func setup(tower_data: TowerData, rs: RunState = null) -> void:
 func _process(delta: float) -> void:
 	_fire_timer -= delta
 	if _fire_timer <= 0.0:
-		var stats := data.stats_at_level(level)
-		_fire_timer = 1.0 / stats.fire_rate
-		var target := _pick_target()
+		var stats: Dictionary = data.stats_at_level(level)
+		_fire_timer = 1.0 / float(stats.get("fire_rate", 1.0))
+		var target: Enemy = _pick_target()
 		if target != null:
 			_shoot(target, stats)
 
@@ -80,18 +80,19 @@ func _effective_damage(base: int, target: Enemy) -> int:
 	return base
 
 func _shoot(target: Enemy, stats: Dictionary) -> void:
+	var dmg: int = stats.get("damage", 0)
 	match data.special:
 		TowerData.TowerSpecial.NONE:
-			_deal(target, _effective_damage(stats.damage, target))
+			_deal(target, _effective_damage(dmg, target))
 		TowerData.TowerSpecial.SLOW:
-			_deal(target, _effective_damage(stats.damage, target))
+			_deal(target, _effective_damage(dmg, target))
 			target.apply_slow(data.slow_factor, data.slow_duration)
 		TowerData.TowerSpecial.AOE:
-			_shoot_aoe(stats.damage)
+			_shoot_aoe(dmg)
 		TowerData.TowerSpecial.CHAIN:
-			_shoot_chain(target, stats.damage)
+			_shoot_chain(target, dmg)
 		TowerData.TowerSpecial.DOT:
-			var tick_dmg := stats.damage / data.dot_ticks
+			var tick_dmg: int = dmg / data.dot_ticks
 			target.apply_dot(tick_dmg, data.dot_duration, data.dot_duration / float(data.dot_ticks))
 		TowerData.TowerSpecial.BUFF:
 			pass
@@ -104,7 +105,7 @@ func _deal(target: Enemy, amount: int) -> void:
 		enemy_killed.emit(self, target)
 
 func _shoot_aoe(damage: int) -> void:
-	var stats := data.stats_at_level(level)
+	var stats: Dictionary = data.stats_at_level(level)
 	for e in _enemies_in_range:
 		if is_instance_valid(e) and global_position.distance_to(e.global_position) <= stats.range:
 			e.take_damage(damage)
@@ -112,14 +113,14 @@ func _shoot_aoe(damage: int) -> void:
 func _shoot_chain(first: Enemy, damage: int) -> void:
 	first.take_damage(damage)
 	var hit: Array[Enemy] = [first]
-	var remaining_chains := data.chain_count
-	var source_pos := first.global_position
+	var remaining_chains: int = data.chain_count
+	var source_pos: Vector2 = first.global_position
 	while remaining_chains > 0:
 		var next: Enemy = null
-		var best_dist := INF
+		var best_dist: float = INF
 		for e in _enemies_in_range:
 			if is_instance_valid(e) and not hit.has(e):
-				var d := source_pos.distance_to(e.global_position)
+				var d: float = source_pos.distance_to(e.global_position)
 				if d < best_dist:
 					best_dist = d
 					next = e
@@ -144,8 +145,8 @@ func sell_value(total_invested: int) -> int:
 	return int(total_invested * EconomyData.SELL_REFUND_RATE)
 
 func _update_range_shape() -> void:
-	var stats := data.stats_at_level(level)
-	# Range visual update — override in scene with actual CollisionShape2D
+	@warning_ignore("unused_variable")
+	var stats: Dictionary = data.stats_at_level(level)
 	pass
 
 func _on_enemy_entered(body: Node2D) -> void:

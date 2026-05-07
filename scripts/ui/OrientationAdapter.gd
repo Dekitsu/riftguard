@@ -13,8 +13,8 @@ func _ready() -> void:
 	_on_orientation_changed(GameSettings.orientation)
 
 func _on_orientation_changed(o: int) -> void:
-	var ls := get_node_or_null(landscape_root)
-	var ps := get_node_or_null(portrait_root)
+	var ls: Node = get_node_or_null(landscape_root)
+	var ps: Node = get_node_or_null(portrait_root)
 	if ls != null:
 		ls.visible = (o == 0)  # 0 = LANDSCAPE
 	if ps != null:

@@ -14,7 +14,7 @@ func _ready() -> void:
 	_collect_slots()
 
 func _collect_waypoints() -> void:
-	var container := get_node_or_null(waypoint_path)
+	var container: Node = get_node_or_null(waypoint_path)
 	if container == null:
 		return
 	for child in container.get_children():
@@ -22,10 +22,10 @@ func _collect_waypoints() -> void:
 			waypoints.append(child.global_position)
 
 func _collect_slots() -> void:
-	var container := get_node_or_null(slot_container_path)
+	var container: Node = get_node_or_null(slot_container_path)
 	if container == null:
 		return
-	var idx := 0
+	var idx: int = 0
 	for child in container.get_children():
 		if child is TowerSlot:
 			child.slot_index = idx
