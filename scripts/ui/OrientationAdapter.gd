@@ -12,10 +12,10 @@ func _ready() -> void:
 	GameSettings.orientation_changed.connect(_on_orientation_changed)
 	_on_orientation_changed(GameSettings.orientation)
 
-func _on_orientation_changed(o: GameSettings.Orientation) -> void:
+func _on_orientation_changed(o: int) -> void:
 	var ls := get_node_or_null(landscape_root)
 	var ps := get_node_or_null(portrait_root)
 	if ls != null:
-		ls.visible = (o == GameSettings.Orientation.LANDSCAPE)
+		ls.visible = (o == 0)  # 0 = LANDSCAPE
 	if ps != null:
-		ps.visible = (o == GameSettings.Orientation.PORTRAIT)
+		ps.visible = (o == 1)  # 1 = PORTRAIT

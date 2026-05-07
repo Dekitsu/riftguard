@@ -1,5 +1,5 @@
 ## Persistent settings — orientation, audio, graphics.
-class_name GameSettings
+## Autoload singleton — no class_name to avoid conflict with autoload name.
 extends Node
 
 signal orientation_changed(new_orientation: Orientation)

@@ -16,11 +16,9 @@ func _on_play() -> void:
 	get_tree().change_scene_to_file("res://scenes/menus/FactionSelect.tscn")
 
 func _on_toggle_orientation() -> void:
-	var next := GameSettings.Orientation.PORTRAIT \
-		if GameSettings.orientation == GameSettings.Orientation.LANDSCAPE \
-		else GameSettings.Orientation.LANDSCAPE
+	var next := 1 if GameSettings.orientation == 0 else 0  # 0=LANDSCAPE 1=PORTRAIT
 	GameSettings.set_orientation(next)
 
 func _refresh_orientation_label() -> void:
-	var label := "Portrait" if GameSettings.orientation == GameSettings.Orientation.PORTRAIT else "Paysage"
+	var label := "Portrait" if GameSettings.orientation == 1 else "Paysage"
 	_orientation_btn.text = "Orientation : %s" % label

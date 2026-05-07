@@ -1,6 +1,5 @@
 ## Persistent save data — faction progression, run stats.
-## Autoload singleton at path "SaveData".
-class_name SaveData
+## Autoload singleton — no class_name to avoid conflict with autoload name.
 extends Node
 
 const SAVE_PATH := "user://save.cfg"
