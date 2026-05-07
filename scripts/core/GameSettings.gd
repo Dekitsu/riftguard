@@ -2,13 +2,15 @@
 ## Autoload singleton — no class_name to avoid conflict with autoload name.
 extends Node
 
-signal orientation_changed(new_orientation: Orientation)
+signal orientation_changed(new_orientation: int)
 
-enum Orientation { LANDSCAPE, PORTRAIT }
+# 0 = LANDSCAPE, 1 = PORTRAIT
+const LANDSCAPE := 0
+const PORTRAIT  := 1
 
 const SAVE_PATH := "user://settings.cfg"
 
-var orientation: Orientation = Orientation.LANDSCAPE
+var orientation: int = LANDSCAPE
 var master_volume: float = 1.0
 var sfx_volume: float = 1.0
 var music_volume: float = 1.0
@@ -16,7 +18,7 @@ var music_volume: float = 1.0
 func _ready() -> void:
 	load_settings()
 
-func set_orientation(o: Orientation) -> void:
+func set_orientation(o: int) -> void:
 	if orientation == o:
 		return
 	orientation = o
@@ -25,11 +27,10 @@ func set_orientation(o: Orientation) -> void:
 	save_settings()
 
 func _apply_orientation() -> void:
-	match orientation:
-		Orientation.LANDSCAPE:
-			DisplayServer.window_set_size(Vector2i(1920, 1080))
-		Orientation.PORTRAIT:
-			DisplayServer.window_set_size(Vector2i(1080, 1920))
+	if orientation == PORTRAIT:
+		DisplayServer.window_set_size(Vector2i(1080, 1920))
+	else:
+		DisplayServer.window_set_size(Vector2i(1920, 1080))
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
@@ -43,7 +44,7 @@ func load_settings() -> void:
 	var cfg := ConfigFile.new()
 	if cfg.load(SAVE_PATH) != OK:
 		return
-	orientation = cfg.get_value("display", "orientation", Orientation.LANDSCAPE)
+	orientation = cfg.get_value("display", "orientation", LANDSCAPE)
 	master_volume = cfg.get_value("audio", "master", 1.0)
 	sfx_volume = cfg.get_value("audio", "sfx", 1.0)
 	music_volume = cfg.get_value("audio", "music", 1.0)
