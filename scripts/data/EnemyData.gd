@@ -19,6 +19,7 @@ enum EnemyType {
 @export var armor: float = 0.0        # flat damage reduction
 @export var gold_reward: int = 5
 @export var is_flying: bool = false
+@export var physical_resist: float = 0.0  # 0.5 = 50% physical damage reduction
 
 # Swarm parameters
 @export var swarm_count: int = 0

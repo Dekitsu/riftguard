@@ -3,6 +3,9 @@ extends Node2D
 
 signal died(gold_reward: int)
 signal reached_gate
+signal spawned_swarm(units: Array[Dictionary])  # Array of {data, position}
+
+enum DamageType { PHYSICAL, MAGIC }
 
 var data: EnemyData
 var current_hp: int
@@ -46,11 +49,26 @@ func _move(delta: float) -> void:
 		global_position = global_position.move_toward(target, step)
 
 func take_damage(amount: int) -> void:
-	var effective := max(0, amount - int(data.armor))
+	take_damage_typed(amount, DamageType.PHYSICAL)
+
+func take_damage_typed(amount: int, damage_type: DamageType) -> void:
+	var effective := amount
+	if damage_type == DamageType.PHYSICAL:
+		var resist := data.physical_resist if "physical_resist" in data else 0.0
+		effective = int(amount * (1.0 - resist))
+	effective = max(0, effective - int(data.armor))
 	current_hp -= effective
 	if current_hp <= 0:
-		died.emit(data.gold_reward)
-		queue_free()
+		_on_death()
+
+func _on_death() -> void:
+	if data.type == EnemyData.EnemyType.SWARM and data.swarm_count > 0 and data.swarm_unit != null:
+		var units: Array[Dictionary] = []
+		for i in data.swarm_count:
+			units.append({ "data": data.swarm_unit, "position": global_position })
+		spawned_swarm.emit(units)
+	died.emit(data.gold_reward)
+	queue_free()
 
 func apply_slow(factor: float, duration: float) -> void:
 	if "slow" in data.resistance_types:
@@ -76,7 +94,6 @@ func _tick_effects(delta: float) -> void:
 			_dot_tick_timer = _dot_tick_interval
 			take_damage(_dot_damage_per_tick)
 
-## Progress along path [0.0 – 1.0], used for targeting.
 func path_progress() -> float:
 	if _waypoints.size() <= 1:
 		return 0.0
