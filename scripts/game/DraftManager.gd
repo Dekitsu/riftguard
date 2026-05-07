@@ -29,7 +29,7 @@ func generate_draft() -> void:
 	emit_choices.assign(_current_choices)
 	draft_ready.emit(emit_choices)
 
-func pick(index: int) -> TowerData:
+func pick(index: int):
 	if index < 0 or index >= _current_choices.size():
 		return null
 	var chosen: TowerData = _current_choices[index]

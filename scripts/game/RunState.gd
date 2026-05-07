@@ -98,7 +98,6 @@ func _find_entry(tower: Tower) -> Dictionary:
 		if e.tower == tower:
 			return e
 	return {}
-	return null
 
 ## XP earned at run end based on waves cleared.
 func xp_earned() -> int:

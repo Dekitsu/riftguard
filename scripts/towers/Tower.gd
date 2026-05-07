@@ -20,11 +20,11 @@ func _process(delta: float) -> void:
 	if _fire_timer <= 0.0:
 		var stats: Dictionary = data.stats_at_level(level)
 		_fire_timer = 1.0 / float(stats.get("fire_rate", 1.0))
-		var target: Enemy = _pick_target()
+		var target: Enemy = _pick_target() as Enemy
 		if target != null:
 			_shoot(target, stats)
 
-func _pick_target() -> Enemy:
+func _pick_target():
 	# Purge invalid refs
 	var valid: Array[Enemy] = []
 	for e in _enemies_in_range:
